@@ -29,11 +29,7 @@ class Pakalpojums:
         print("Pakalpojums atlaide: "+str(self.Pakalpojuma_atlaide))
         print("Pakalpojums cena par stundu: "+str(self.Pakalpojuma_cena_stunda))
         print("Laiks pieejams: "+str(self.Laiks_pieejams)+"\n")
-
-
-
-    
-
+ 
 class Klients:
     Klienta_vards=""
     Klienta_uzvards=""
@@ -60,7 +56,6 @@ class Klients:
         print("Klienta personas kods: "+str(self.Klienta_PK))
         print("Klienta personas telefona numurs: "+str(self.Klienta_tel_numurs)+'\n')
 
-
 class Izmantosana:
     Pakalpojuma_sakuma_laiks=0
     Pakalpojuma_beigu_laiks=0
@@ -71,6 +66,11 @@ class Izmantosana:
     izmantosana_id=0
 
     id_iter_izmantosana=itertools.count()
+
+    def __init__(self, sakuma_laiks, beigu_laiks, datums):
+        self.Pakalpojuma_beigu_laiks=beigu_laiks
+        self.Pakalpojuma_sakuma_laiks=sakuma_laiks
+        self.Pakalpojuma_datums=datums
 
     def Cena_kopa(self):
         kopeja_cena=self.Izmantosanas_cena_stunda*(((self.Pakalpojuma_beigu_laiks-self.Pakalpojuma_sakuma_laiks)))
