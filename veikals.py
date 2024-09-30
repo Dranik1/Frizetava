@@ -1,9 +1,7 @@
 import itertools
 import datetime as dt
+import json
 
-
-class Kata:
-    pass
 
 
             
@@ -77,6 +75,11 @@ class Kumite(Dalibnieks):
         else:
             print("Who are you?")
             
+class Kata(Dalibnieks):
+    pass
+
+
+
 
 dal1=Dalibnieks("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
 dal1.dalibnieka_info()
