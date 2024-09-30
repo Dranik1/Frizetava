@@ -5,11 +5,6 @@ import datetime as dt
 class Kata:
     pass
 
-class Kumite:
-    kategorijas=[0-60]
-    def svara_kategorija(self):
-        if self.Dalibnieka_dzimums[0]=="s":
-            pass
 
             
 
@@ -40,5 +35,52 @@ class Dalibnieks:
         ]
 
     
-kat=["1-60"]
-print(kat[0])
+
+class Kumite(Dalibnieks):
+    kategorijas_vir=[61, 68, 76, 85, 300]
+    kategorijas_siev=[51, 56, 62, 69, 300]
+    def svara_kategorija(self):
+        if self.Dalibnieka_dzimums[0]=="s":
+            stop=False
+            a=0
+            b=1
+            c=1
+            while stop!=True:
+                if self.Dalibnieka_svars in range(1, self.kategorijas_siev[0]):
+                    print(c)
+                    stop=True
+                elif self.Dalibnieka_svars in range(self.kategorijas_siev[a], self.kategorijas_siev[b]):
+                    c+=1
+                    print(c)
+                    stop=True
+                else:
+                    a=a+1
+                    b=b+1
+                    c+=1
+        elif self.Dalibnieka_dzimums[0]=="v":
+            stop=False
+            a=0
+            b=1
+            c=1
+            while stop!=True:
+                if self.Dalibnieka_svars in range(1, self.kategorijas_vir[0]):
+                    print(c)
+                    stop=True
+                elif self.Dalibnieka_svars in range(self.kategorijas_vir[a], self.kategorijas_vir[b]):
+                    c+=1
+                    print(c)
+                    stop=True
+                else:
+                    a=a+1
+                    b=b+1
+                    c+=1
+        else:
+            print("Who are you?")
+            
+
+dal1=Dalibnieks("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
+dal1.dalibnieka_info()
+dal1=Kumite("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
+dal1.svara_kategorija()
+
+
