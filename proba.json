@@ -1,0 +1,101 @@
+[
+  {
+    "name": "d",
+    "surname": "c",
+    "gender": "virietis",
+    "age": 1,
+    "weight": 5,
+    "belt": 0,
+    "personal code": 9,
+    "kata": "Anan",
+    "id": 1
+  },
+  {
+    "name": "d",
+    "surname": "c",
+    "gender": "virietis",
+    "age": 1,
+    "weight": 5,
+    "belt": 0,
+    "personal code": 9,
+    "kata": "Anan",
+    "id": 1
+  },
+  {
+    "name": "d",
+    "surname": "c",
+    "gender": "virietis",
+    "age": 1,
+    "weight": 5,
+    "belt": 0,
+    "personal code": 9,
+    "kata": "Anan",
+    "id": 1
+  },
+  {
+    "name": "d",
+    "surname": "c",
+    "gender": "virietis",
+    "age": 1,
+    "weight": 5,
+    "belt": 0,
+    "personal code": 9,
+    "kata": "Anan",
+    "id": 1
+  },
+  {
+    "name": "anna",
+    "surname": "h",
+    "gender": "sieviete",
+    "age": 17,
+    "weight": 45,
+    "belt": "3 Kyu",
+    "personal code": "123456-78900",
+    "weight cathegory": "-50 kg",
+    "id": 2
+  },
+  {
+    "name": "viktor",
+    "surname": "h",
+    "gender": "virietis",
+    "age": 17,
+    "weight": 199,
+    "belt": "3 Kyu",
+    "personal code": "123456-78900",
+    "kata": "Anan",
+    "id": 4
+  },
+  {
+    "name": "anna",
+    "surname": "h",
+    "gender": "sieviete",
+    "age": 17,
+    "weight": 45,
+    "belt": "3 Kyu",
+    "personal code": "123456-78900",
+    "weight cathegory": "-50 kg",
+    "id": 2
+  },
+  {
+    "name": "viktor",
+    "surname": "h",
+    "gender": "virietis",
+    "age": 17,
+    "weight": 199,
+    "belt": "3 Kyu",
+    "personal code": "123456-78900",
+    "kata": "Wanshu",
+    "id": 4
+  },
+  {
+    "name": "d",
+    "surname": "c",
+    "gender": "virietis",
+    "age": 1,
+    "weight": 5,
+    "belt": 0,
+    "personal code": 9,
+    "kata": "Anan",
+    "id": 1
+  }
+]

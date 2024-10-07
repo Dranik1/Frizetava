@@ -190,9 +190,16 @@ def registration():
             "id":Dalibnieka_id
         }
 
-        with open("dalibnieks.json", mode="a") as jsonfile:
-             json.dump(dalibnieka_data, jsonfile)
+        #with open("dalibnieks.json", mode="a") as jsonfile:
+             #json.dump(dalibnieka_data, jsonfile)
+
+        with open('dalibnieks.json') as f:
+             data=json.load(f)
             
+        data.append(dalibnieka_data)
+
+        with open('dalibnieks.json', 'w') as f:
+             json.dump(data, f, indent=2)
 
         
 registration()

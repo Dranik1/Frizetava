@@ -104,8 +104,13 @@ class Kumite(Dalibnieks):
             "id":self.Dalibnieka_id
         }
 
-        with open("dalibnieki.json", mode="w", encoding="utf-8") as write_file:
-            json.dump(dalibnieka_data, write_file)
+        with open('dalibnieki.json') as f:
+             data=json.load(f)
+            
+        data.append(dalibnieka_data)
+
+        with open('dalibnieki.json', 'w') as f:
+             json.dump(data, f, indent=2)
 
 
 class Kata(Dalibnieks):
@@ -252,9 +257,13 @@ class Kata(Dalibnieks):
             "kata":self.Dalibnieka_kata,
             "id":self.Dalibnieka_id
         }
-        dalibnieka_str=json.dumps(dalibnieka_data)
-        with open("dalibnieki.json", mode="w", encoding="utf-8") as write_file:
-            write_file.write(dalibnieka_str)
+        with open('dalibnieki.json') as f:
+             data=json.load(f)
+            
+        data.append(dalibnieka_data)
+
+        with open('dalibnieki.json', 'w') as f:
+             json.dump(data, f, indent=2)
 
 
         
@@ -267,11 +276,11 @@ class Kata(Dalibnieks):
 
 
 
-''''-dal1=Dalibnieks("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
+dal1=Dalibnieks("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
 dal1.dalibnieka_info()
 dal1=Kumite("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
 dal1.svara_kategorija()
-dal1.registration()'''
+dal1.registration()
 
 dal2=Dalibnieks("viktor", "h", "v", 17, 199, "3 Kyu", "123456-78900")
 dal2.dalibnieka_info()
