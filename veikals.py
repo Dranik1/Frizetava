@@ -83,6 +83,8 @@ class Kumite(Dalibnieks):
                     c+=1
         else:
             print("Who are you?")
+
+
     def registration(self):
         if self.Dalibnieka_dzimums[0]=="v":
             self.gender="virietis"
@@ -98,7 +100,8 @@ class Kumite(Dalibnieks):
             "weight":self.Dalibnieka_svars,
             "belt":self.Dalibnieka_josta,
             "personal code":self.Dalibnieka_pk,
-            "weight cathegory":self.Dalibnieka_svara_kategorija
+            "weight cathegory":self.Dalibnieka_svara_kategorija,
+            "id":self.Dalibnieka_id
         }
 
         with open("dalibnieki.json", mode="w", encoding="utf-8") as write_file:
