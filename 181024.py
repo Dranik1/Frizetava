@@ -18,3 +18,29 @@ def divide_num():
 
     finally:
         print("Darbība ir pabeigta")
+
+divide_num()
+
+
+def read_file():
+    try:
+        filename=input()
+        with open(filename, 'r') as file:
+            content=file.read()
+            print("Faila saturs:")
+            print(content)
+
+    except FileNotFoundError:
+        print()
+
+    except PermissionError:
+        print()
+
+    except Exception as e:
+        print(e)
+
+    finally:
+        print()
+
+read_file()
+
