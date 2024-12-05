@@ -133,21 +133,19 @@ class Kata(Dalibnieks):
         for r in kata:
             print(r)
         
-        kata_id = conn.execute("SELECT id_kata from Kata")
-        print(tuple(kata_id)[0])
-        stop=False
+        stop= False
         while stop!=True:
-            kata_num=int(input("Kata id: "))
-            for i in tuple(kata_id):
-                    print(i)
-                    print('a')
-                    agree=input(f'Is {tuple(i[kata_num])} your kata? Please answer True or False.')
-                    if agree=="True":
-                        print("You can be registrated")
-                        self.Dalibnieka_kata=i[kata_num]
+            kata_num = int(input('Ievadiet kata id: '))
+            for i in range(103):
+                cur = conn.execute("SELECT * from Kata WHERE id_kata = ?", (i,))
+                kata = cur.fetchall()
+                if kata_num == i:
+                    agree = input(f"{kata} ir jūsu kata? ")
+                    if agree=='True':
+                        self.Dalibnieka_kata=kata
                         stop=True
                     else:
-                        print("Try again")
+                        print("Mēģini vēl reiz")
         
     def registration(self):
         if self.Dalibnieka_dzimums[0]=="v":

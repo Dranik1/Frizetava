@@ -207,6 +207,19 @@ registration()'''
 
 
 conn = sqlite3.connect('karate.db')
-for i in range(109):
-    cur = conn.execute("SELECT id_kata from Kata WHERE id_kata = ?", (i,))
-    print(cur)
+
+stop= False
+while stop!=True:
+    kata_num = int(input('Ievadiet kata id: '))
+    for i in range(103):
+        cur = conn.execute("SELECT kata from Kata WHERE id_kata = ?", (i,))
+        kata = cur.fetchall()
+        if kata_num == i:
+            agree = input(f"{kata} ir jūsu kata? ")
+            if agree=='True':
+                kata_reg=kata
+                stop=True
+            else:
+                print("Mēģini vēl reiz")
+print(kata_reg)
+
