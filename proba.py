@@ -1,4 +1,5 @@
 import json
+import sqlite3
 '''Dalibnieka_dzimums="s"
 Dalibnieka_svars=68
 
@@ -156,7 +157,7 @@ while stop_kata!=True:
 kata_num=input()
 for i in kataJson["kata"]:
     if i[kata_num]:
-        print(i[kata_num])'''
+        print(i[kata_num])
 
 
 
@@ -202,4 +203,10 @@ def registration():
              json.dump(data, f, indent=2)
 
         
-registration()
+registration()'''
+
+
+conn = sqlite3.connect('karate.db')
+for i in range(109):
+    cur = conn.execute("SELECT id_kata from Kata WHERE id_kata = ?", (i,))
+    print(cur)
