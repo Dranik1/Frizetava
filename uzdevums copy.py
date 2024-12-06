@@ -181,7 +181,7 @@ class Kata(Dalibnieks):
         
         
 while True:
-    num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Stop  "))
+    num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Stop  5.Noprintet dalibniekus"))
     if num==1:
         kk=input("Kata vai kumite sacensībam: ")
         if kk.lower()=='kumite':
@@ -208,15 +208,23 @@ while True:
             dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
             dal.kata()
             dal.registration()
+            
     elif num==2:
         kk=input("Kata vai kimite dalibnieku: ")
         if kk.lower()=='kata':
             id_d = int(input("Ievadiet dalibnieka id: "))
             conn.execute("UPDATE Dalibnieks_kata set * Values(?, ?, ?, ?, ?, ?, ?) WHERE id_dalibnieka_kata = ?", (vards, uzvards, dzimums, vecums, masa, josta, pk, id_d))
         elif kk.lower()=='kumite':
+            print('Ievadiet jaunus datus: ')
+            vards = input()
+            uzvards = input()
+            dzimums = input()
+            vecums = int(input())
+            masa = int(input())
+            josta = input()
+            pk = input()
             id_d = int(input("Ievadiet dalibnieka id: "))
-            conn.execute("UPDATE Dalibnieks_kata set * Values(?, ?, ?, ?, ?, ?, ?) WHERE id_dalibnieka_kumite = ?", (vards, uzvards, dzimums, vecums, masa, josta, pk, id_d))
-
+            conn.execute("UPDATE Dalibnieks_kumite set name=?, surname=?, gender=?, age=?, belt=?, personal_code=? WHERE id_dalibnieka_kumite = ?", (vards, uzvards, dzimums, vecums, josta, pk, id_d))
 
     elif num==3:
         kk=input("Kata vai kimite dalibnieku: ")
@@ -231,8 +239,18 @@ while True:
         
     elif num==4:
         break
-    else:
-        break
+
+    elif num==5:
+        kk=input("Kata vai kimite dalibnieku: ")
+        if kk.lower()=='kata':
+            cur = conn.execute("Select * from Dalibnieks_kata")
+            cur.fetchall()
+            print(cur)
+        elif kk.lower()=='kumite':
+            cur = conn.execute("Select * from Dalibnieks_kumite")
+            cur.fetchall()
+            print(cur.fetchall())
+
            
            
            
