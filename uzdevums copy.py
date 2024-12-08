@@ -119,7 +119,18 @@ class Kumite(Dalibnieks):
         with open('dalibnieki.json', 'w') as f:
              json.dump(data, f, indent=2)'''
         
-        curr = conn.execute("INSERT INTO Dalibnieks_kumite(id_dalibnieka_kumite, name, surname, age, belt, personal_code, id_weight_cathegory, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (self.Dalibnieka_id, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.id_reg, self.gender))
+        conn.execute("INSERT INTO Dalibnieks_kumite(name, surname, age, belt, personal_code, id_weight_cathegory, gender) VALUES(?, ?, ?, ?, ?, ?, ?)", (self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.id_reg, self.gender))
+        conn.commit()
+
+    def update(self):
+        if self.Dalibnieka_dzimums[0]=="v":
+            self.gender="virietis"
+        elif self.Dalibnieka_dzimums[0]=="s":
+            self.gender="sieviete"
+        else:
+            self.gender=None
+        id_d = int(input("Ievadiet dalibnieka id: "))
+        conn.execute("REPLACE INTO Dalibnieks_kumite(name, surname, age, belt, personal_code, id_weight_cathegory, geneder) VALUES(?, ?, ?, ?, ?, ?, ?) WHERE id_dalibnieka_kata=?", (self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.id_reg, self.gender, id_d))
         conn.commit()
 
 class Kata(Dalibnieks):
@@ -173,58 +184,84 @@ class Kata(Dalibnieks):
         with open('dalibnieki.json', 'w') as f:
              json.dump(data, f, indent=2)'''
         
-        curr = conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (self.Dalibnieka_id, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
+        conn.execute("INSERT INTO Dalibnieks_kata(name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?)", (self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
 
+    def update(self):
+        if self.Dalibnieka_dzimums[0]=="v":
+            self.gender="virietis"
+        elif self.Dalibnieka_dzimums[0]=="s":
+            self.gender="sieviete"
+        else:
+            self.gender=None
+        id_d = int(input("Ievadiet dalibnieka id: "))
+        conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname) VALUES(%s, %s, %s) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards))
+        conn.commit()
 
-        
-        
+
+def upd():
+    kk=input("Kata vai kumite sacensībam: ")
+    if kk.lower()=='kumite':
+        vards = input()
+        uzvards = input()
+        dzimums = input()
+        vecums = int(input())
+        masa = int(input())
+        josta = input()
+        pk = input()
+        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal.svara_kategorija()
+        dal.update()
+    elif kk.lower()=='kata':
+        vards = input()
+        uzvards = input()
+        dzimums = input()
+        vecums = int(input())
+        masa = int(input())
+        josta = input()
+        pk = input()
+        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal.kata()
+        dal.update()
+
+def reg():     
+    kk=input("Kata vai kumite sacensībam: ")
+    if kk.lower()=='kumite':
+        vards = input()
+        uzvards = input()
+        dzimums = input()
+        vecums = int(input())
+        masa = int(input())
+        josta = input()
+        pk = input()
+        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal.svara_kategorija()
+        dal.registration()
+    elif kk.lower()=='kata':
+        vards = input()
+        uzvards = input()
+        dzimums = input()
+        vecums = int(input())
+        masa = int(input())
+        josta = input()
+        pk = input()
+        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
+        dal.kata()
+        dal.registration()
+
 while True:
     num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Stop  5.Noprintet dalibniekus"))
     if num==1:
-        kk=input("Kata vai kumite sacensībam: ")
-        if kk.lower()=='kumite':
-            vards = input()
-            uzvards = input()
-            dzimums = input()
-            vecums = int(input())
-            masa = int(input())
-            josta = input()
-            pk = input()
-            dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-            dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
-            dal.svara_kategorija()
-            dal.registration()
-        elif kk.lower()=='kata':
-            vards = input()
-            uzvards = input()
-            dzimums = input()
-            vecums = int(input())
-            masa = int(input())
-            josta = input()
-            pk = input()
-            dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-            dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
-            dal.kata()
-            dal.registration()
+        reg()
             
     elif num==2:
-        kk=input("Kata vai kimite dalibnieku: ")
-        if kk.lower()=='kata':
-            id_d = int(input("Ievadiet dalibnieka id: "))
-            conn.execute("UPDATE Dalibnieks_kata set * Values(?, ?, ?, ?, ?, ?, ?) WHERE id_dalibnieka_kata = ?", (vards, uzvards, dzimums, vecums, masa, josta, pk, id_d))
-        elif kk.lower()=='kumite':
-            print('Ievadiet jaunus datus: ')
-            vards = input()
-            uzvards = input()
-            dzimums = input()
-            vecums = int(input())
-            masa = int(input())
-            josta = input()
-            pk = input()
-            id_d = int(input("Ievadiet dalibnieka id: "))
-            conn.execute("UPDATE Dalibnieks_kumite set name=?, surname=?, gender=?, age=?, belt=?, personal_code=? WHERE id_dalibnieka_kumite = ?", (vards, uzvards, dzimums, vecums, josta, pk, id_d))
+        #upd()
+        pass
 
     elif num==3:
         kk=input("Kata vai kimite dalibnieku: ")
@@ -244,12 +281,14 @@ while True:
         kk=input("Kata vai kimite dalibnieku: ")
         if kk.lower()=='kata':
             cur = conn.execute("Select * from Dalibnieks_kata")
-            cur.fetchall()
-            print(cur)
+            dal = cur.fetchall()
+            for i in dal:
+                print(i)
         elif kk.lower()=='kumite':
             cur = conn.execute("Select * from Dalibnieks_kumite")
-            cur.fetchall()
-            print(cur.fetchall())
+            dal = cur.fetchall()
+            for i in dal:
+                print(i)
 
            
            
