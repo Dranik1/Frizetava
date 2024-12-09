@@ -1,14 +1,17 @@
 import itertools
-import datetime as dt
 import sqlite3 as db
-import sys
+import re
+import tkinter
+from tkinter.simpledialog import askinteger
 
-sys.tracebacklimit=None
+
+
+
 
 conn = db.connect('karate.db')
 curr = conn.cursor()            
 
-class Dalibnieks:
+class Dalibnieks:                             
     Dalibnieka_vards=""
     Dalibnieka_uzvards=""
     Dalibnieka_dzimums=""
@@ -227,7 +230,7 @@ def upd():
         dal.kata()
         dal.update()
 
-def reg():     
+def reg():
     kk=input("Kata vai kumite sacensībam: ")
     if kk.lower()=='kumite':
         vards = input("Ievadiet vārdu: ")
@@ -291,8 +294,20 @@ def find():
     else:
         pass
 
+def delete():
+    kk=input("Kata vai kumite dalibnieku: ")
+    if kk.lower()=='kata':
+        id_d=int(input("Ievadiet dalibnieka id: "))
+        conn.execute("DELETE from Dalibnieks_kata where id_dalibnieka_kata=?", (id_d,))
+        conn.commit()
+    elif kk.lower()=='kumite':
+        id_d=int(input("Ievadiet dalibnieka id: "))
+        conn.execute("DELETE * from Dalibnieks_kumite where id_dalibnieka_kumite=?", (id_d,))
+        conn.commit()
+    print("Dalibnieks tik izdzēsts!")
 
-while True:
+
+'''while True:
     num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Atrast dalibnieku  5.Noprintet dalibniekus  6.Stop   "))
     if num==1:
         reg()
@@ -302,16 +317,7 @@ while True:
         print("Dalibnieka dati tik mainīti!")
 
     elif num==3:
-        kk=input("Kata vai kumite dalibnieku: ")
-        if kk.lower()=='kata':
-            id_d=int(input("Ievadiet dalibnieka id: "))
-            conn.execute("DELETE from Dalibnieks_kata where id_dalibnieka_kata=?", (id_d,))
-            conn.commit()
-        elif kk.lower()=='kumite':
-            id_d=int(input("Ievadiet dalibnieka id: "))
-            conn.execute("DELETE * from Dalibnieks_kumite where id_dalibnieka_kumite=?", (id_d,))
-            conn.commit()
-        print("Dalibnieks tik izdzēsts!")
+        delete()
         
     elif num==4:
         find()
@@ -332,13 +338,28 @@ while True:
     elif num==6:
         break
     else:
-        pass
+        pass'''
 
            
            
-           
+top = tkinter.Tk()
+top.title("Sacensības sistēma")
+top.minsize(500,500)
+top.maxsize(700,700)
+top.config(bg='skyblue') 
 
 
+
+
+left=tkinter.Frame(top, width=200, height=500, bg='grey')  
+left.grid(row=0, column=1, padx=10, pady=5)
+tkinter.Label(top, text='Sacensibas sistema')
+
+
+B=tkinter.Button(top, text='Registration')       
+B.place(x=50, y=100)
+
+top.mainloop()
 
 
 
