@@ -1,7 +1,9 @@
 import itertools
 import datetime as dt
 import sqlite3 as db
+import sys
 
+sys.tracebacklimit=None
 
 conn = db.connect('karate.db')
 curr = conn.cursor()            
@@ -198,13 +200,6 @@ class Kata(Dalibnieks):
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
-def kk_error():
-    kk=input("Kata vai kimite dalibnieku: ")
-    if kk.lower!='kata' or 'kumite':
-        raise Exception("Jūs neparezi uzrakstijat!")
-    else:
-        return kk
-
 def upd():
     kk=input("Kata vai kumite sacensībam: ")
     if kk.lower()=='kumite':
@@ -296,7 +291,6 @@ def find():
     else:
         pass
 
-kk_error()
 
 while True:
     num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Atrast dalibnieku  5.Noprintet dalibniekus  6.Stop   "))
@@ -308,7 +302,7 @@ while True:
         print("Dalibnieka dati tik mainīti!")
 
     elif num==3:
-        kk=input("Kata vai kimite dalibnieku: ")
+        kk=input("Kata vai kumite dalibnieku: ")
         if kk.lower()=='kata':
             id_d=int(input("Ievadiet dalibnieka id: "))
             conn.execute("DELETE from Dalibnieks_kata where id_dalibnieka_kata=?", (id_d,))
