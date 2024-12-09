@@ -1,6 +1,5 @@
 import itertools
 import datetime as dt
-import json
 import sqlite3 as db
 
 
@@ -199,6 +198,12 @@ class Kata(Dalibnieks):
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
+def kk_error():
+    kk=input("Kata vai kimite dalibnieku: ")
+    if kk.lower!='kata' or 'kumite':
+        raise Exception("Jūs neparezi uzrakstijat!")
+    else:
+        return kk
 
 def upd():
     kk=input("Kata vai kumite sacensībam: ")
@@ -291,6 +296,8 @@ def find():
     else:
         pass
 
+kk_error()
+
 while True:
     num=int(input("1.Reģistreties  2.Mainīt datus  3.Dzēst  4.Atrast dalibnieku  5.Noprintet dalibniekus  6.Stop   "))
     if num==1:
@@ -340,19 +347,4 @@ while True:
 
 
 
-'''dal1=Dalibnieks("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
-dal1.dalibnieka_info()
-dal1=Kumite("anna", "h", "sieviete", 17, 45, "3 Kyu", "123456-78900")
-dal1.svara_kategorija()
-dal1.registration()
-
-dal2=Dalibnieks("viktor", "h", "v", 17, 199, "3 Kyu", "123456-78900")
-dal2.dalibnieka_info()
-dal2=Kata("viktor", "h", "v", 17, 199, "3 Kyu", "123456-78900")
-dal2.kata()
-dal2.registration()
-
-cur=conn.execute("SELECT * from Dalibnieks_kumite, Dalibnieks_kata")
-a=cur.fetchall()
-print(a)'''
 
