@@ -2,7 +2,7 @@ import itertools
 import sqlite3 as db
 import re
 from tkinter import *
-from tkinter import messagebox
+from tkinter import messagebox, ttk
 from tkinter.simpledialog import askinteger
 
 
@@ -275,6 +275,27 @@ def delete():
 def kata_level():
 
     def reg_logs():
+
+        def kata_list():
+            try:
+
+                kata_combobox["values"]=()
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("SELECT kata from Kata")
+                names = []
+                name_all=cursor.fetchall()
+                for katas in name_all:
+                    names.append(katas)
+                conn.close()
+
+                kata_combobox['values'] = names
+
+            except Exception as e:
+                messagebox.showerror("Error", f"Neizdevas nolasīt kata nosaukumus: {e}")
+
+
+
         def kata_reg():
             vards = entry_vards.get()
             uzvards = entry_uzvards.get()
@@ -290,61 +311,62 @@ def kata_level():
                     masa = int(masa)
                     dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
                     dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
-                    dal.kata()
+                    dal.Dalibnieka_kata_id = kata_combobox.get()
                     dal.registration()
 
-                    messagebox.showinfo("Success", "Dati ir saglabāti")
+                    
+
 
                 except ValueError:
                     messagebox.showerror("Error")
             else:
                 messagebox.showerror("Error")
         
-
+        kata_list()
         reg_log = Toplevel()
         reg_log.title("Registrācija")
 
         label2 = Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
 
-        def click(event):
-            entry_vards.delete(0, END)
 
-        v = StringVar().set("Vārds:")
-        entry_vards = Entry(reg_log, textvariable=v)
-        entry_vards.grid(column=0, row=1)
-        entry_vards.bind("<1>", click)
+        v = Label(reg_log, text="Vards:").grid(column=0, row=1)
+        entry_vards = Entry(reg_log)
+        entry_vards.grid(column=1, row=1, padx=5, pady=5)
 
-        u = StringVar().set("Uzvārds:")
-        entry_uzvards = Entry(reg_log, textvariable=u)
-        entry_uzvards.grid(column=0, row=2)
-        entry_vards.bind("<1>", click)
 
-        d = StringVar().set("Dzimums:")
-        entry_dzimums = Entry(reg_log, textvariable=d)
-        entry_dzimums.grid(column=0, row=3)
-        entry_vards.bind("<1>", click)
+        u = Label(reg_log, text="Uzvards:").grid(column=0, row=2)
+        entry_uzvards = Entry(reg_log)
+        entry_uzvards.grid(column=1, row=2, padx=5, pady=5)
+        
 
-        ve = StringVar().set("Vecums:")
-        entry_vecums = Entry(reg_log, textvariable=ve)
-        entry_vecums.grid(column=0, row=4)
-        entry_vards.bind("<1>", click)
+        d = Label(reg_log, text="Dzimums:").grid(column=0, row=3)
+        entry_dzimums = Entry(reg_log)
+        entry_dzimums.grid(column=1, row=3, padx=5, pady=5)
+        
 
-        m = StringVar().set("Masa:")
-        entry_masa = Entry(reg_log, textvariable=m)
-        entry_masa.grid(column=0, row=5)
-        entry_vards.bind("<1>", click)
+        ve = Label(reg_log, text="Vecums:").grid(column=0, row=4)
+        entry_vecums = Entry(reg_log)
+        entry_vecums.grid(column=1, row=4, padx=5, pady=5)
+        
 
-        j = StringVar().set("Josta:")
-        entry_josta = Entry(reg_log, textvariable=j)
-        entry_josta.grid(column=0, row=6)
-        entry_vards.bind("<1>", click)
+        m = Label(reg_log, text="Masa:").grid(column=0, row=5)
+        entry_masa = Entry(reg_log)
+        entry_masa.grid(column=1, row=5, padx=5, pady=5)
+        
 
-        p = StringVar().set("Personas kods:")
-        entry_pk = Entry(reg_log, textvariable=p)
-        entry_pk.grid(column=0, row=7)
-        entry_vards.bind("<1>", click)
+        j = Label(reg_log, text="Josta:").grid(column=0, row=6)
+        entry_josta = Entry(reg_log)
+        entry_josta.grid(column=1, row=6, padx=5, pady=5)
+        
 
-        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=0, row=0)
+        p = Label(reg_log, text="Personas kods:").grid(column=0, row=7)
+        entry_pk = Entry(reg_log)
+        entry_pk.grid(column=1, row=7, padx=5, pady=5)
+
+        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly").grid(column=0, row=8)
+        
+
+        kata_list_btn = Button(reg_log, text="Izvelet kata", padx=10, pady=10, command=kata_reg).grid(column=0, row=9)
 
 
 
