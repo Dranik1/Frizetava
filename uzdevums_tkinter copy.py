@@ -277,19 +277,18 @@ def kata_level():
     def reg_logs():
 
         def kata_list():
+            global names
             try:
 
-                kata_combobox["values"]=()
                 conn = db.connect('karate.db')
                 cursor = conn.cursor()
                 cursor.execute("SELECT kata from Kata")
                 names = []
                 name_all=cursor.fetchall()
                 for katas in name_all:
-                    names.append(katas)
+                    names.append(katas[0])
                 conn.close()
-
-                kata_combobox['values'] = names
+                
 
             except Exception as e:
                 messagebox.showerror("Error", f"Neizdevas nolasīt kata nosaukumus: {e}")
@@ -297,6 +296,7 @@ def kata_level():
 
 
         def kata_reg():
+            global dal
             vards = entry_vards.get()
             uzvards = entry_uzvards.get()
             dzimums = entry_dzimums.get()
@@ -311,22 +311,36 @@ def kata_level():
                     masa = int(masa)
                     dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
                     dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
-                    dal.Dalibnieka_kata_id = kata_combobox.get()
-                    dal.registration()
-
-                    
-
 
                 except ValueError:
                     messagebox.showerror("Error")
             else:
                 messagebox.showerror("Error")
+
+        def kata_select():
+            
+            try:
+                print("L")
+                get_var = kata_combobox.get()
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("SELECT id_kata from Kata where kata like ?", (str(get_var),))
+                id_kata = cursor.fetchone()
+                dal.Dalibnieka_kata_id=id_kata
+                dal.registration()
+            except Exception as e:
+                messagebox.showerror("Error", e)
         
-        kata_list()
+        
+
+        
+
         reg_log = Toplevel()
         reg_log.title("Registrācija")
 
-        label2 = Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
+        kata_list()
+
+        Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
 
 
         v = Label(reg_log, text="Vards:").grid(column=0, row=1)
@@ -363,10 +377,10 @@ def kata_level():
         entry_pk = Entry(reg_log)
         entry_pk.grid(column=1, row=7, padx=5, pady=5)
 
-        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly").grid(column=0, row=8)
+        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names).grid(column=0, row=8)
         
-
-        kata_list_btn = Button(reg_log, text="Izvelet kata", padx=10, pady=10, command=kata_reg).grid(column=0, row=9)
+        select_btn = Button(reg_log, text="Kata", padx=10, pady=10, command=kata_select).grid(column=0, row=9)
+        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
 
 
