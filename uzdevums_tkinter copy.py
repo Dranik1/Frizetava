@@ -311,25 +311,23 @@ def kata_level():
                     masa = int(masa)
                     dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
                     dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
+                    get_var = kata_combobox.get()
+                    conn = db.connect('karate.db')
+                    cursor = conn.cursor()
+                    cursor.execute("SELECT id_kata from Kata where kata = ?;", (get_var,),)
+                    id_kata = cursor.fetchone()
+                    print(id_kata)
+                    dal.Dalibnieka_kata_id=id_kata[0]
+                    dal.registration()
+
+                    messagebox.showinfo("Success", "Dalibnieks tik reģistrēts")
 
                 except ValueError:
                     messagebox.showerror("Error")
             else:
                 messagebox.showerror("Error")
 
-        def kata_select():
-            
-            try:
-                print("L")
-                get_var = kata_combobox.get()
-                conn = db.connect('karate.db')
-                cursor = conn.cursor()
-                cursor.execute("SELECT id_kata from Kata where kata like ?", (str(get_var),))
-                id_kata = cursor.fetchone()
-                dal.Dalibnieka_kata_id=id_kata
-                dal.registration()
-            except Exception as e:
-                messagebox.showerror("Error", e)
+
         
         
 
@@ -377,22 +375,77 @@ def kata_level():
         entry_pk = Entry(reg_log)
         entry_pk.grid(column=1, row=7, padx=5, pady=5)
 
-        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names).grid(column=0, row=8)
-        
-        select_btn = Button(reg_log, text="Kata", padx=10, pady=10, command=kata_select).grid(column=0, row=9)
+        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
+        kata_combobox.grid(column=0, row=8)
+
         saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
+    def upd_logs():
+        pass
+
+    def find_logs():
+
+        def print_all():
+            conn = db.connect('karate.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * from Dalibnieks_kata")
+            info = cursor.fetchall()
+
+            messagebox.showinfo("Visi dalibnieki", info)
+
+        def find_by_id():
+
+            id_dal = entry_id.get()
+            try:
+
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("Select * from Dalibnieks_kata where id_dalibnieka_kata = ?", (id_dal,))
+                info = cursor.fetchall()
+
+                messagebox.showinfo("Dalibnieks", info)
+            except Exception as e:
+                messagebox.showerror('Error', e)
+
+
+        find_log = Toplevel()
+
+        all_btn = Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0)
+        entry_id = Entry(find_log)
+        entry_id.grid(column=0, row=1)
+        atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2)
+
+    def del_logs():
+
+        def del_dalib():
+            id_dal = entry_del_id.get()
+            try:
+
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("DELETE from Dalibnieks_kata where id_dalibnieka_kata = ?", (id_dal,))
+                conn.commit()
+                conn.close()
+                messagebox.showinfo("Success", "Dalibnieks tiek nodzēsts")
+
+            except Exception as e:
+                messagebox.showerror("Error", e)
 
 
 
+        del_log = Toplevel()
+
+        entry_del_id = Entry(del_log)
+        entry_del_id.grid(column=0, row=0)
+        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
 
     kata_logs = Toplevel()
     kata_logs.title("Kata sacensības")
     
     reg_btn = Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=0, row=0)
     upd_btn = Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=0, row=1)
-    find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10).grid(column=0, row=2)
-    del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10).grid(column=0, row=3)
+    find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=0, row=2)
+    del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=0, row=3)
 
 
 
