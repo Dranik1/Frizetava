@@ -157,14 +157,14 @@ class Kata(Dalibnieks):
         conn.commit()
 
 
-    def update(self):
+    def update_vards(self):
         if self.Dalibnieka_dzimums[0]=="v":
             self.gender="virietis"
         elif self.Dalibnieka_dzimums[0]=="s":
             self.gender="sieviete"
         else:
             self.gender=None
-        id_d = int(input("Ievadiet dalibnieka id: "))
+        vards_d = int(input("Ievadiet dalibnieka id: "))
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
@@ -384,6 +384,92 @@ def kata_level():
     def upd_logs():
         pass
 
+        '''def kata_reg():
+            global dal
+            vards = entry_vards.get()
+            uzvards = entry_uzvards.get()
+            dzimums = entry_dzimums.get()
+            vecums = entry_vecums.get()
+            masa = entry_masa.get()
+            josta = entry_josta.get()
+            pk = entry_pk.get()
+
+            if vards and uzvards and dzimums and vecums.isdigit()>0 and masa.isdigit()>0 and josta and pk:
+                try:
+                    vecums = int(vecums)
+                    masa = int(masa)
+                    dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+                    dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
+                    get_var = kata_combobox.get()
+                    conn = db.connect('karate.db')
+                    cursor = conn.cursor()
+                    cursor.execute("SELECT id_kata from Kata where kata = ?;", (get_var,),)
+                    id_kata = cursor.fetchone()
+                    print(id_kata)
+                    dal.Dalibnieka_kata_id=id_kata[0]
+                    dal.update()
+
+                    messagebox.showinfo("Success", "Dalibnieks tik reģistrēts")
+
+                except ValueError:
+                    messagebox.showerror("Error")
+            else:
+                messagebox.showerror("Error")
+
+
+        
+        
+
+        
+
+        reg_log = Toplevel()
+        reg_log.title("Registrācija")
+
+
+
+        Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
+
+
+        v = Label(reg_log, text="Vards:").grid(column=0, row=1)
+        entry_vards = Entry(reg_log)
+        entry_vards.grid(column=1, row=1, padx=5, pady=5)
+
+
+        u = Label(reg_log, text="Uzvards:").grid(column=0, row=2)
+        entry_uzvards = Entry(reg_log)
+        entry_uzvards.grid(column=1, row=2, padx=5, pady=5)
+        
+
+        d = Label(reg_log, text="Dzimums:").grid(column=0, row=3)
+        entry_dzimums = Entry(reg_log)
+        entry_dzimums.grid(column=1, row=3, padx=5, pady=5)
+        
+
+        ve = Label(reg_log, text="Vecums:").grid(column=0, row=4)
+        entry_vecums = Entry(reg_log)
+        entry_vecums.grid(column=1, row=4, padx=5, pady=5)
+        
+
+        m = Label(reg_log, text="Masa:").grid(column=0, row=5)
+        entry_masa = Entry(reg_log)
+        entry_masa.grid(column=1, row=5, padx=5, pady=5)
+        
+
+        j = Label(reg_log, text="Josta:").grid(column=0, row=6)
+        entry_josta = Entry(reg_log)
+        entry_josta.grid(column=1, row=6, padx=5, pady=5)
+        
+
+        p = Label(reg_log, text="Personas kods:").grid(column=0, row=7)
+        entry_pk = Entry(reg_log)
+        entry_pk.grid(column=1, row=7, padx=5, pady=5)
+
+        Label(reg_log, text="Kata:").grid(column=0, row=8)
+        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
+        kata_combobox.grid(column=1, row=8, padx=10)
+
+        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)'''
+
     def find_logs():
 
         def print_all():
@@ -440,6 +526,8 @@ def kata_level():
         entry_del_id.grid(column=0, row=0, padx=10, pady=10)
         Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
 
+
+
     kata_logs = Toplevel()
     kata_logs.geometry("200x250")
     kata_logs.title("Kata sacensības")
@@ -449,7 +537,150 @@ def kata_level():
     find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
     del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
 
+def kumite_level():
 
+    def reg_logs():
+
+        
+
+        def kata_reg():
+            global dal
+            vards = entry_vards.get()
+            uzvards = entry_uzvards.get()
+            dzimums = entry_dzimums.get()
+            vecums = entry_vecums.get()
+            masa = entry_masa.get()
+            josta = entry_josta.get()
+            pk = entry_pk.get()
+
+            if vards and uzvards and dzimums and vecums.isdigit()>0 and masa.isdigit()>0 and josta and pk:
+                try:
+                    vecums = int(vecums)
+                    masa = int(masa)
+                    dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
+                    dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
+                    dal.svara_kategorija()
+                    dal.registration()
+
+                    messagebox.showinfo("Success", "Dalibnieks tik reģistrēts")
+
+                except ValueError:
+                    messagebox.showerror("Error")
+            else:
+                messagebox.showerror("Error")
+        
+        reg_log = Toplevel()
+        reg_log.title("Registrācija")
+
+
+
+        Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
+
+
+        v = Label(reg_log, text="Vards:").grid(column=0, row=1)
+        entry_vards = Entry(reg_log)
+        entry_vards.grid(column=1, row=1, padx=5, pady=5)
+
+
+        u = Label(reg_log, text="Uzvards:").grid(column=0, row=2)
+        entry_uzvards = Entry(reg_log)
+        entry_uzvards.grid(column=1, row=2, padx=5, pady=5)
+        
+
+        d = Label(reg_log, text="Dzimums:").grid(column=0, row=3)
+        entry_dzimums = Entry(reg_log)
+        entry_dzimums.grid(column=1, row=3, padx=5, pady=5)
+        
+
+        ve = Label(reg_log, text="Vecums:").grid(column=0, row=4)
+        entry_vecums = Entry(reg_log)
+        entry_vecums.grid(column=1, row=4, padx=5, pady=5)
+        
+
+        m = Label(reg_log, text="Masa:").grid(column=0, row=5)
+        entry_masa = Entry(reg_log)
+        entry_masa.grid(column=1, row=5, padx=5, pady=5)
+        
+
+        j = Label(reg_log, text="Josta:").grid(column=0, row=6)
+        entry_josta = Entry(reg_log)
+        entry_josta.grid(column=1, row=6, padx=5, pady=5)
+        
+
+        p = Label(reg_log, text="Personas kods:").grid(column=0, row=7)
+        entry_pk = Entry(reg_log)
+        entry_pk.grid(column=1, row=7, padx=5, pady=5)
+
+
+        Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
+
+    def find_logs():
+
+        def print_all():
+            conn = db.connect('karate.db')
+            cursor = conn.cursor()
+            cursor.execute("SELECT * from Dalibnieks_kumite")
+            info = cursor.fetchall()
+
+            messagebox.showinfo("Visi dalibnieki", info)
+
+        def find_by_id():
+
+            id_dal = entry_id.get()
+            try:
+
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("Select * from Dalibnieks_kumite where id_dalibnieka_kumite = ?", (id_dal,))
+                info = cursor.fetchall()
+
+                messagebox.showinfo("Dalibnieks", info)
+            except Exception as e:
+                messagebox.showerror('Error', e)
+
+
+        find_log = Toplevel()
+
+        Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0, padx=10, pady=10)
+        entry_id = Entry(find_log)
+        entry_id.grid(column=0, row=1, padx=10, pady=10)
+        Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2, padx=10, pady=10)
+
+    def del_logs():
+
+        def del_dalib():
+            id_dal = entry_del_id.get()
+            try:
+
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("DELETE from Dalibnieks_kumite where id_dalibnieka_kumite = ?", (id_dal,))
+                conn.commit()
+                conn.close()
+                messagebox.showinfo("Success", "Dalibnieks tiek nodzēsts")
+
+            except Exception as e:
+                messagebox.showerror("Error", e)
+
+
+
+        del_log = Toplevel()
+
+        entry_del_id = Entry(del_log)
+        entry_del_id.grid(column=0, row=0, padx=10, pady=10)
+        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
+
+    
+
+
+    kumite_logs = Toplevel()
+    kumite_logs.geometry("200x250")
+    kumite_logs.title("Kumite sacensības")
+
+    Button(kumite_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=1, row=0, padx=30, pady=10)
+    Button(kumite_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=1, row=1, padx=30, pady=10)
+    Button(kumite_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
+    Button(kumite_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
 
 root = Tk()
 root.geometry("200x250")
@@ -457,7 +688,7 @@ root.title("Sacensības sistēma")
 label1 = Label(root, text="Izvēlies sacensības kategoriju: ", padx=10, pady=10).grid(column=2, row=0)
 
 kat_btn = Button(root, text="Kata", padx=30, pady=20, command=kata_level).grid(column=2, row=1, padx=10, pady=10)
-kumite_btn = Button(root, text="Kumite", padx=30, pady=20).grid(column=2, row=2, padx=10, pady=10)
+kumite_btn = Button(root, text="Kumite", padx=30, pady=20, command=kumite_level).grid(column=2, row=2, padx=10, pady=10)
 
 root.mainloop()
            
