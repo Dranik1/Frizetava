@@ -164,7 +164,7 @@ class Kata(Dalibnieks):
             self.gender="sieviete"
         else:
             self.gender=None
-        vards_d = int(input("Ievadiet dalibnieka id: "))
+        #vards_d = int(input("Ievadiet dalibnieka id: "))
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
@@ -498,9 +498,11 @@ def kata_level():
         find_log = Toplevel()
 
         all_btn = Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0, padx=10, pady=10)
+
+        Label(find_log, text="Ievadiet id:").grid(column=0, row=1, padx=10, pady=10)
         entry_id = Entry(find_log)
-        entry_id.grid(column=0, row=1, padx=10, pady=10)
-        atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2, padx=10, pady=10)
+        entry_id.grid(column=0, row=2, padx=10, pady=10)
+        atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=3, padx=10, pady=10)
 
     def del_logs():
 
@@ -521,10 +523,10 @@ def kata_level():
 
 
         del_log = Toplevel()
-
+        Label(del_log, text="Ievadiet id:").grid(column=0, row=0, padx=10, pady=10)
         entry_del_id = Entry(del_log)
-        entry_del_id.grid(column=0, row=0, padx=10, pady=10)
-        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
+        entry_del_id.grid(column=0, row=1, padx=10, pady=10)
+        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=2, padx=5, pady=5)
 
 
 
@@ -642,9 +644,11 @@ def kumite_level():
         find_log = Toplevel()
 
         Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0, padx=10, pady=10)
+
+        Label(find_log, text="Ievadiet id:").grid(column=0, row=1, padx=10, pady=10)
         entry_id = Entry(find_log)
-        entry_id.grid(column=0, row=1, padx=10, pady=10)
-        Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2, padx=10, pady=10)
+        entry_id.grid(column=0, row=2, padx=10, pady=10)
+        Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=3, padx=10, pady=10)
 
     def del_logs():
 
@@ -666,9 +670,10 @@ def kumite_level():
 
         del_log = Toplevel()
 
+        Label(del_log, text="Ievadiet id:").grid(column=0, row=0, padx=10, pady=10)
         entry_del_id = Entry(del_log)
-        entry_del_id.grid(column=0, row=0, padx=10, pady=10)
-        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
+        entry_del_id.grid(column=0, row=1, padx=10, pady=10)
+        Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=2, padx=5, pady=5)
 
     
 
