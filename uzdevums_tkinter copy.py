@@ -375,8 +375,9 @@ def kata_level():
         entry_pk = Entry(reg_log)
         entry_pk.grid(column=1, row=7, padx=5, pady=5)
 
+        Label(reg_log, text="Kata:").grid(column=0, row=8)
         kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
-        kata_combobox.grid(column=0, row=8)
+        kata_combobox.grid(column=1, row=8, padx=10)
 
         saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
@@ -410,10 +411,10 @@ def kata_level():
 
         find_log = Toplevel()
 
-        all_btn = Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0)
+        all_btn = Button(find_log, text="Noprintēt visus", padx=10, pady=10, command=print_all).grid(column=0, row=0, padx=10, pady=10)
         entry_id = Entry(find_log)
-        entry_id.grid(column=0, row=1)
-        atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2)
+        entry_id.grid(column=0, row=1, padx=10, pady=10)
+        atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=2, padx=10, pady=10)
 
     def del_logs():
 
@@ -436,16 +437,17 @@ def kata_level():
         del_log = Toplevel()
 
         entry_del_id = Entry(del_log)
-        entry_del_id.grid(column=0, row=0)
+        entry_del_id.grid(column=0, row=0, padx=10, pady=10)
         Button(del_log, text="Dzēst", padx=10, pady=10, command=del_dalib).grid(column=0, row=1, padx=5, pady=5)
 
     kata_logs = Toplevel()
+    kata_logs.geometry("200x250")
     kata_logs.title("Kata sacensības")
     
-    reg_btn = Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=0, row=0)
-    upd_btn = Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=0, row=1)
-    find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=0, row=2)
-    del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=0, row=3)
+    reg_btn = Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=1, row=0, padx=30, pady=10)
+    upd_btn = Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=1, row=1, padx=30, pady=10)
+    find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
+    del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
 
 
 
