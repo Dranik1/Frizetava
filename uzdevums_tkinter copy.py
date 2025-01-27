@@ -475,7 +475,7 @@ def kata_level():
         def print_all():
             conn = db.connect('karate.db')
             cursor = conn.cursor()
-            cursor.execute("SELECT * from Dalibnieks_kata")
+            cursor.execute("select * from Dalibnieks_kata INNER JOIN kata on Dalibnieks_kata.id_kata = Kata.id_kata")
             info = cursor.fetchall()
 
             messagebox.showinfo("Visi dalibnieki", info)
@@ -487,10 +487,11 @@ def kata_level():
 
                 conn = db.connect('karate.db')
                 cursor = conn.cursor()
-                cursor.execute("Select * from Dalibnieks_kata where id_dalibnieka_kata = ?", (id_dal,))
+                cursor.execute("select * from Dalibnieks_kata INNER JOIN kata on Dalibnieks_kata.id_kata = Kata.id_kata where id_dalibnieka_kata = ?", (id_dal,))
                 info = cursor.fetchall()
+                print(info[0][0])
 
-                messagebox.showinfo("Dalibnieks", info)
+                messagebox.showinfo("Dalibnieks", f"Dalibnieka vārds: {info[0][1]}\nDalibnieka uzvārds: {info[0][2]}\nDalibnieka vecums: {info[0][3]}\nDalibnieka vārds: {info[0][9]}\n")
             except Exception as e:
                 messagebox.showerror('Error', e)
 
@@ -633,10 +634,9 @@ def kumite_level():
 
                 conn = db.connect('karate.db')
                 cursor = conn.cursor()
-                cursor.execute("Select * from Dalibnieks_kumite where id_dalibnieka_kumite = ?", (id_dal,))
+                cursor.execute("select * from Dalibnieks_kumite where id_dalibnieka_kumite = ?", (id_dal,))
                 info = cursor.fetchall()
-
-                messagebox.showinfo("Dalibnieks", info)
+                messagebox.showinfo("Dalibnieks", f"Dalibnieka vārds: {info[0][1]}\nDalibnieka uzvārds: {info[0][2]}\nDalibnieka vecums: {info[0][3]}\nDalibnieka svara kategorija: {info[0][6]}")
             except Exception as e:
                 messagebox.showerror('Error', e)
 
