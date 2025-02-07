@@ -5,12 +5,16 @@ from tkinter import *
 from tkinter import messagebox, ttk
 from tkinter.simpledialog import askinteger
 
+#------------------------------------------------
 
-
-
+#Datu baze izveide
 
 conn = db.connect('karate.db')
 curr = conn.cursor()            
+
+#-----------------------------------------------
+
+#Vecākais class Dalibnieks ar inicializēšanu
 
 class Dalibnieks:                             
     Dalibnieka_vards=""
@@ -38,17 +42,22 @@ class Dalibnieks:
             self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_dzimums, self.Dalibnieka_vecums, self.Dalibnieka_svars, self.Dalibnieka_josta, self.Dalibnieka_pk
         ]
 
-    
+#----------------------------------------------------------
+
+#Bērnu class cīņas dalibniekam
 
 class Kumite(Dalibnieks):
     def __init__(self, vards, uzvards, dzimums, vecums, svars, josta, pk):
         super().__init__(vards, uzvards, dzimums, vecums, svars, josta, pk)
     id = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    #Svaras kategorijas
     kategorijas_vir=[61, 68, 76, 85, 300]
     kategorijas_vir_name=["-60 kg", "61-67 kg", "68-75 kg", "76-84 kg", "85+ kg"]
     kategorijas_siev=[51, 56, 62, 69, 300]
     kategorijas_siev_name=["-50 kg", "51-55 kg", "56-61 kg", "62-68 kg", "69+ kg"]
 
+    #svara kategorijas noteikšana
+    
     def svara_kategorija(self):
         self.id_reg = 0
         self.Dalibnieka_svara_kategorija=""
@@ -97,6 +106,7 @@ class Kumite(Dalibnieks):
         else:
             print("Who are you?")
 
+    #Dalibnieka reģistrešana
 
     def registration(self):
         if self.Dalibnieka_dzimums[0]=="v":
@@ -119,6 +129,11 @@ class Kumite(Dalibnieks):
         id_d = int(input("Ievadiet dalibnieka id: "))
         conn.execute("INSERT INTO Dalibnieks_kumite(id_dalibnieka_kumite, name, surname, age, belt, personal_code, id_weight_cathegory, gender) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kumite) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_weight_cathegory=excluded.id_weight_cathegory, gender=excluded.gender;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_svara_kategorija, self.gender))
         conn.commit()
+
+#-------------------------------------------------------------------
+
+#Otrais bernu class kata Dalibniekam
+
 
 class Kata(Dalibnieks):
     def __init__(self, vards, uzvards, dzimums, vecums, svars, josta, pk):
@@ -145,6 +160,9 @@ class Kata(Dalibnieks):
                     else:
                         print("Mēģini vēl reiz")
         
+
+
+    #Dalibnieka registresana    
     def registration(self):
         if self.Dalibnieka_dzimums[0]=="v":
             self.gender="virietis"
@@ -168,111 +186,17 @@ class Kata(Dalibnieks):
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
 
-def upd():
-    kk=input("Kata vai kumite sacensībam: ")
-    if kk.lower()=='kumite':
-        vards = input("Ievadiet jauno vārdu: ")
-        uzvards = input("Ievadiet jauno uzvārdu: ")
-        dzimums = input("Ievadiet jauno dzimumu: ")
-        vecums = int(input("Ievadiet jauno vecumu: "))
-        masa = int(input("Ievadiet jauno svaru: "))
-        josta = input("Ievadiet jauno jostu: ")
-        pk = input("Ievadiet jauno pesonalo kodu: ")
-        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal.svara_kategorija()
-        dal.update()
-    elif kk.lower()=='kata':
-        vards = input("Ievadiet jauno vārdu: ")
-        uzvards = input("Ievadiet jauno uzvārdu: ")
-        dzimums = input("Ievadiet jauno dzimumu: ")
-        vecums = int(input("Ievadiet jauno vecumu: "))
-        masa = int(input("Ievadiet jauno svaru: "))
-        josta = input("Ievadiet jauno jostu: ")
-        pk = input("Ievadiet jauno pesonalo kodu: ")
-        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal.kata()
-        dal.update()
+#------------------------------------------------------------
 
-def reg():
-    kk=input("Kata vai kumite sacensībam: ")
-    if kk.lower()=='kumite':
-        vards = input("Ievadiet vārdu: ")
-        uzvards = input("Ievadiet uzvārdu: ")
-        dzimums = input("Ievadiet dzimumu: ")
-        vecums = int(input("Ievadiet vecumu: "))
-        masa = int(input("Ievadiet svaru: "))
-        josta = input("Ievadiet jostu: ")
-        pk = input("Ievadiet pesonalo kodu: ")
-        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal=Kumite(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal.svara_kategorija()
-        dal.registration()
-    elif kk.lower()=='kata':
-        vards = input("Ievadiet vārdu: ")
-        uzvards = input("Ievadiet uzvārdu: ")
-        dzimums = input("Ievadiet dzimumu: ")
-        vecums = int(input("Ievadiet vecumu: "))
-        masa = int(input("Ievadiet svaru: "))
-        josta = input("Ievadiet jostu: ")
-        pk = input("Ievadiet pesonalo kodu: ")
-        dal=Dalibnieks(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal=Kata(vards, uzvards, dzimums, vecums, masa, josta, pk)
-        dal.kata()
-        dal.registration()
+#Tkinter
 
-def find():
-    kk=input("Kata vai kumite dalibnieku: ")
-    if kk.lower()=='kata':
-        choice = input("Vai jūs gribāt atrast dalibnieku ar id vai ar kata: ")
-        if choice=='id':
-            id_d=int(input("Ievadiet dalibnieka id: "))
-            c = conn.execute("Select * from Dalibnieks_kata WHERE id_dalibnieka_kata=?",(id_d,))
-            c = c.fetchall()
-            for i in c:
-                print(c)
-        elif choice=='kata':
-            kata = conn.execute("SELECT * from Kata")
-            print("Kata list: ")
-            for r in kata:
-                print(r)
-            kata_d = input("Ievadiet kata id: ")
-            c = conn.execute("SELECT * from Dalibnieks_kata WHERE id_kata=?", (kata_d,))
-            c = c.fetchall()
-            for i in c:
-                print(c)
-    elif kk.lower()=='kumite':
-        choice = input("Vai jūs gribāt atrast dalibnieku ar id vai ar svara kategoriju: ")
-        if choice=='id':
-            id_d=int(input("Ievadiet dalibnieka id: "))
-            c = conn.execute("Select * from Dalibnieks_kumite WHERE id_dalibnieka_kumite=?",(id_d,))
-            c = c.fetchall()
-            for i in c:
-                print(c)
-        elif choice[0]=='s':
-            svars_d = input("Ievadiet svara kategoriju: ")
-            c = conn.execute("SELECT * from Dalibnieks_kumite WHERE id_weight_cathegory=?", (svars_d,))
-            c = c.fetchall()
-            for i in c:
-                print(c)
-    else:
-        pass
+#------------------------------------------------------------
 
-def delete():
-    kk=input("Kata vai kumite dalibnieku: ")
-    if kk.lower()=='kata':
-        id_d=int(input("Ievadiet dalibnieka id: "))
-        conn.execute("DELETE from Dalibnieks_kata where id_dalibnieka_kata=?", (id_d,))
-        conn.commit()
-    elif kk.lower()=='kumite':
-        id_d=int(input("Ievadiet dalibnieka id: "))
-        conn.execute("DELETE * from Dalibnieks_kumite where id_dalibnieka_kumite=?", (id_d,))
-        conn.commit()
-    print("Dalibnieks tik izdzēsts!")
-
+#Kata līmenis
 
 def kata_level():
+
+    #Registracijas logs
 
     def reg_logs():
 
@@ -381,6 +305,8 @@ def kata_level():
 
         saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
+    #Atjaunošanas logs
+
     def upd_logs():
         pass
 
@@ -470,6 +396,8 @@ def kata_level():
 
         saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)'''
 
+    #Atrašanas logs
+
     def find_logs():
 
         def print_all():
@@ -505,6 +433,8 @@ def kata_level():
         entry_id.grid(column=0, row=2, padx=10, pady=10)
         atrast = Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=3, padx=10, pady=10)
 
+    #Dzēšanas logs
+
     def del_logs():
 
         def del_dalib():
@@ -535,12 +465,18 @@ def kata_level():
     kata_logs.geometry("200x250")
     kata_logs.title("Kata sacensības")
     
-    reg_btn = Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=1, row=0, padx=30, pady=10)
-    upd_btn = Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=1, row=1, padx=30, pady=10)
-    find_btn = Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
-    del_btn = Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
+    Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=1, row=0, padx=30, pady=10)
+    Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=1, row=1, padx=30, pady=10)
+    Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
+    Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
+
+#------------------------------------------------------------
+
+#Cīņas līmenis
 
 def kumite_level():
+
+    #Registracijas logs
 
     def reg_logs():
 
@@ -617,6 +553,8 @@ def kumite_level():
 
         Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
+    #Atrašanas logs
+
     def find_logs():
 
         def print_all():
@@ -649,6 +587,8 @@ def kumite_level():
         entry_id = Entry(find_log)
         entry_id.grid(column=0, row=2, padx=10, pady=10)
         Button(find_log, text="Atrast ar id", padx=10, pady=10, command=find_by_id).grid(column=0, row=3, padx=10, pady=10)
+
+    #Dzēšanas logs
 
     def del_logs():
 
@@ -687,6 +627,9 @@ def kumite_level():
     Button(kumite_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
     Button(kumite_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
 
+#------------------------------------------------------------
+
+#Galvenais logs
 root = Tk()
 root.geometry("200x250")
 root.title("Sacensības sistēma")
