@@ -308,9 +308,26 @@ def kata_level():
     #Atjaunošanas logs
 
     def upd_logs():
-        pass
 
-        '''def kata_reg():
+        def kata_list():
+            global names
+            try:
+
+                conn = db.connect('karate.db')
+                cursor = conn.cursor()
+                cursor.execute("SELECT kata from Kata")
+                names = []
+                name_all=cursor.fetchall()
+                for katas in name_all:
+                    names.append(katas[0])
+                conn.close()
+                
+
+            except Exception as e:
+                messagebox.showerror("Error", f"Neizdevas nolasīt kata nosaukumus: {e}")
+        
+
+        def kata_reg():
             global dal
             vards = entry_vards.get()
             uzvards = entry_uzvards.get()
@@ -346,7 +363,7 @@ def kata_level():
         
         
 
-        
+        kata_list()
 
         reg_log = Toplevel()
         reg_log.title("Registrācija")
@@ -394,7 +411,7 @@ def kata_level():
         kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
         kata_combobox.grid(column=1, row=8, padx=10)
 
-        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)'''
+        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
     #Atrašanas logs
 
@@ -466,7 +483,7 @@ def kata_level():
     kata_logs.title("Kata sacensības")
     
     Button(kata_logs, text="Registracija", padx=10, pady=10, command=reg_logs).grid(column=1, row=0, padx=30, pady=10)
-    Button(kata_logs, text="Atjaunot datus", padx=10, pady=10).grid(column=1, row=1, padx=30, pady=10)
+    Button(kata_logs, text="Atjaunot datus", padx=10, pady=10, command=upd_logs).grid(column=1, row=1, padx=30, pady=10)
     Button(kata_logs, text="Atrast", padx=10, pady=10, command=find_logs).grid(column=1, row=2, padx=30, pady=10)
     Button(kata_logs, text="Nodzēst", padx=10, pady=10, command=del_logs).grid(column=1, row=3, padx=30, pady=10)
 
