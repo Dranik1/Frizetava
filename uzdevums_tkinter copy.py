@@ -303,7 +303,7 @@ def kata_level():
         kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
         kata_combobox.grid(column=1, row=8, padx=10)
 
-        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
+        Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
     #Atjaunošanas logs
 
@@ -360,58 +360,61 @@ def kata_level():
                 messagebox.showerror("Error")
 
 
-        
-        
-
-        kata_list()
-
-        reg_log = Toplevel()
-        reg_log.title("Registrācija")
-
-
-
-        Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
-
-
-        v = Label(reg_log, text="Vards:").grid(column=0, row=1)
-        entry_vards = Entry(reg_log)
-        entry_vards.grid(column=1, row=1, padx=5, pady=5)
-
-
-        u = Label(reg_log, text="Uzvards:").grid(column=0, row=2)
-        entry_uzvards = Entry(reg_log)
-        entry_uzvards.grid(column=1, row=2, padx=5, pady=5)
+        def upd_all():
         
 
-        d = Label(reg_log, text="Dzimums:").grid(column=0, row=3)
-        entry_dzimums = Entry(reg_log)
-        entry_dzimums.grid(column=1, row=3, padx=5, pady=5)
-        
+            kata_list()
 
-        ve = Label(reg_log, text="Vecums:").grid(column=0, row=4)
-        entry_vecums = Entry(reg_log)
-        entry_vecums.grid(column=1, row=4, padx=5, pady=5)
-        
+            reg_log = Toplevel()
+            reg_log.title("Registrācija")
 
-        m = Label(reg_log, text="Masa:").grid(column=0, row=5)
-        entry_masa = Entry(reg_log)
-        entry_masa.grid(column=1, row=5, padx=5, pady=5)
-        
 
-        j = Label(reg_log, text="Josta:").grid(column=0, row=6)
-        entry_josta = Entry(reg_log)
-        entry_josta.grid(column=1, row=6, padx=5, pady=5)
-        
 
-        p = Label(reg_log, text="Personas kods:").grid(column=0, row=7)
-        entry_pk = Entry(reg_log)
-        entry_pk.grid(column=1, row=7, padx=5, pady=5)
+            Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
 
-        Label(reg_log, text="Kata:").grid(column=0, row=8)
-        kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
-        kata_combobox.grid(column=1, row=8, padx=10)
 
-        saglabat = Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
+            Label(reg_log, text="Vards:").grid(column=0, row=1)
+            entry_vards = Entry(reg_log)
+            entry_vards.grid(column=1, row=1, padx=5, pady=5)
+
+
+            Label(reg_log, text="Uzvards:").grid(column=0, row=2)
+            entry_uzvards = Entry(reg_log)
+            entry_uzvards.grid(column=1, row=2, padx=5, pady=5)
+            
+
+            Label(reg_log, text="Dzimums:").grid(column=0, row=3)
+            entry_dzimums = Entry(reg_log)
+            entry_dzimums.grid(column=1, row=3, padx=5, pady=5)
+            
+
+            Label(reg_log, text="Vecums:").grid(column=0, row=4)
+            entry_vecums = Entry(reg_log)
+            entry_vecums.grid(column=1, row=4, padx=5, pady=5)
+            
+
+            Label(reg_log, text="Masa:").grid(column=0, row=5)
+            entry_masa = Entry(reg_log)
+            entry_masa.grid(column=1, row=5, padx=5, pady=5)
+            
+
+            Label(reg_log, text="Josta:").grid(column=0, row=6)
+            entry_josta = Entry(reg_log)
+            entry_josta.grid(column=1, row=6, padx=5, pady=5)
+            
+
+            Label(reg_log, text="Personas kods:").grid(column=0, row=7)
+            entry_pk = Entry(reg_log)
+            entry_pk.grid(column=1, row=7, padx=5, pady=5)
+
+            Label(reg_log, text="Kata:").grid(column=0, row=8)
+            kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
+            kata_combobox.grid(column=1, row=8, padx=10)
+
+            Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
+
+            upd_root = Toplevel()
+            
 
     #Atrašanas logs
 
