@@ -413,8 +413,12 @@ def kata_level():
 
             Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
-            upd_root = Toplevel()
-            
+        upd_root = Toplevel()
+        upd_root.geometry("200x250")
+
+        Button(upd_root, text="Atjaunot vienu daļu", padx=10, pady=10).grid(column=0, row=0)
+        Button(upd_root, text="Atjaunot visu", padx=10, pady=10, command=upd_all).grid(column=0, row=1)
+
 
     #Atrašanas logs
 
