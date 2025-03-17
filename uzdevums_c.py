@@ -342,24 +342,6 @@ def delete():
 
            
            
-top = tkinter.Tk()
-top.title("Sacensības sistēma")
-top.minsize(500,500)
-top.maxsize(700,700)
-top.config(bg='skyblue') 
-
-
-
-
-left=tkinter.Frame(top, width=200, height=500, bg='grey')  
-left.grid(row=0, column=1, padx=10, pady=5)
-tkinter.Label(top, text='Sacensibas sistema')
-
-
-B=tkinter.Button(top, text='Registration')       
-B.place(x=50, y=100)
-
-top.mainloop()
 
 
 
