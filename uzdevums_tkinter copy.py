@@ -217,6 +217,41 @@ def kata_level():
             except Exception as e:
                 messagebox.showerror("Error", f"Neizdevas nolasīt kata nosaukumus: {e}")
 
+        def parbaude():
+            vards = entry_vards.get()
+            uzvards = entry_uzvards.get()
+            dzimums = entry_dzimums.get()
+            vecums = entry_vecums.get()
+            masa = entry_masa.get()
+            josta = entry_josta.get()
+            pk = entry_pk.get()
+
+            vards_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]$|^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[A-ZĀ-Ž]{1}[a-zā-ž]'
+            vecums_patt = r'^\d$'
+            masa_patt = r'^\d{2,3}$'
+            josta_patt = r'^\d{1,2} + [Dan, Kyu]$'
+            pk_patt = r'^\d{6}+[-]+\d{5}'
+
+            if re.match(vards_patt, vards) and re.match(vards_patt, uzvards):
+                pass
+                if re.match(vecums_patt, vecums):
+                    pass
+                    if re.match(masa_patt, masa):
+                        pass
+                        if re.match(josta_patt, josta):
+                            pass
+                            if re.match(pk_patt, pk):
+                                kata_reg()
+                            else:
+                                messagebox.showerror("", "Personas kods ir nepareizā formatā")
+                        else:
+                            messagebox.showerror("", "Josta ir nepareizā formatā")
+                    else:
+                        messagebox.showerror("", "Masa ir nepareizā formatā")
+                else:
+                    messagebox.showerror("", "Vecums ir nepareizā formatā")
+            else:
+                messagebox.showerror("", "Vārds vai uzvārds ir nepareizā formatā")
 
 
         def kata_reg():
@@ -303,7 +338,7 @@ def kata_level():
         kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
         kata_combobox.grid(column=1, row=8, padx=10)
 
-        Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
+        Button(reg_log, text="Saglabat", padx=10, pady=10, command=parbaude).grid(column=1, row=9)
 
     #Atjaunošanas logs
 
