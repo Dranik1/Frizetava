@@ -9,7 +9,7 @@ def parbaude():
 
     vards_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]+$|^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[A-ZĀ-Ž]{1}[a-zā-ž]+$'
     dzg_patt = r'^\d{2}/\d{2}/\d{4}$|^\d{2}.\d{2}.\d{4}$'
-    vieta_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[iela, prospekts, aleja]+\s+\d{1,}'
+    vieta_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[iela, prospekts, aleja]+\s+\d{1,}$|^["]+[A-ZĀ-Ža-zā-ž]+["]$'
 
     if re.match(vards_patt, vards):
         pass
