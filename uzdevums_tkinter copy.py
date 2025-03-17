@@ -359,6 +359,31 @@ def kata_level():
             else:
                 messagebox.showerror("Error")
 
+        def upd_one():
+            
+            def update_one():
+                what = entry_what.get()
+                on = entry_on.get()
+                if what and on:
+                    try:
+                        curr.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name) VALUES(?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name;", (id_d, self.Dalibnieka_vards))
+
+            upd_one_root = Toplevel()
+            upd_one_root.geometry("200x250")
+
+            Label(upd_one_root, text="Sportista id: ").grid(column=1, row=0)
+            entry_what = Entry(upd_one_root)
+            entry_what.grid(column=1, row=1)
+
+            Label(upd_one_root, text="Ko jus gribat atjaunot: ").grid(column=1, row=0)
+            entry_what = Entry(upd_one_root)
+            entry_what.grid(column=1, row=1)
+
+            Label(upd_one_root, text="Uz ko jus gribat atjaunot: ").grid(column=1, row=2)
+            entry_on = Entry(upd_one_root)
+            entry_on.grid(column=1, row=3)
+
+            Button(upd_one_root, text="Atjaunot", padx=10, pady=10).grid(column=1, row=4)
 
         def upd_all():
         
