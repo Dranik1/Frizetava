@@ -182,6 +182,7 @@ class Kata(Dalibnieks):
             self.gender="sieviete"
         else:
             self.gender=None
+        id_d = entry_id.get()
         #vards_d = int(input("Ievadiet dalibnieka id: "))
         conn.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name, surname, age, belt, personal_code, id_kata, geneder) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name, surname=excluded.surname, age=excluded.age, belt=excluded.belt, personal_code=excluded.personal_code, id_kata=excluded.id_kata, geneder=excluded.geneder;", (id_d, self.Dalibnieka_vards, self.Dalibnieka_uzvards, self.Dalibnieka_vecums, self.Dalibnieka_josta, self.Dalibnieka_pk, self.Dalibnieka_kata_id, self.gender))
         conn.commit()
@@ -226,28 +227,31 @@ def kata_level():
             josta = entry_josta.get()
             pk = entry_pk.get()
 
-            vards_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]$|^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[A-ZĀ-Ž]{1}[a-zā-ž]'
-            vecums_patt = r'^\d$'
+            vards_patt = r'^[A-ZĀ-Ž]{1}[a-zā-ž]+$|^[A-ZĀ-Ž]{1}[a-zā-ž]+\s+[A-ZĀ-Ž]{1}[a-zā-ž]+$'
+            vecums_patt = r'^\d+$'
             masa_patt = r'^\d{2,3}$'
-            josta_patt = r'^\d{1,2} + [Dan, Kyu]$'
-            pk_patt = r'^\d{6}+[-]+\d{5}'
+            #josta_patt = r'^\d{2}+\s+[a-z]$'
+            josta_patt = r'[0-9]{1,2}[\sDan, \sKyu]'
+            pk_patt = r'\d{6}+[-]+\d{5}'
 
             if re.match(vards_patt, vards) and re.match(vards_patt, uzvards):
-                pass
+                
                 if re.match(vecums_patt, vecums):
-                    pass
-                    if re.match(masa_patt, masa):
-                        pass
-                        if re.match(josta_patt, josta):
-                            pass
+                    
+                    if re.match(josta_patt, josta):
+
+                        if re.match(masa_patt, masa):
+
                             if re.match(pk_patt, pk):
                                 kata_reg()
                             else:
                                 messagebox.showerror("", "Personas kods ir nepareizā formatā")
                         else:
-                            messagebox.showerror("", "Josta ir nepareizā formatā")
+                            messagebox.showerror("", "Masa ir nepareizā formatā")
+                        
                     else:
-                        messagebox.showerror("", "Masa ir nepareizā formatā")
+                        messagebox.showerror("", "Josta ir nepareizā formatā")
+
                 else:
                     messagebox.showerror("", "Vecums ir nepareizā formatā")
             else:
@@ -397,28 +401,28 @@ def kata_level():
         def upd_one():
             
             def update_one():
+                id_d = entry_id.get()
                 what = entry_what.get()
                 on = entry_on.get()
                 if what and on:
-                    try:
-                        curr.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata, name) VALUES(?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET name=excluded.name;", (id_d, self.Dalibnieka_vards))
+                    curr.execute("INSERT INTO Dalibnieks_kata(id_dalibnieka_kata) VALUES(?, ?) ON CONFLICT(id_dalibnieka_kata) DO UPDATE SET ;", (id_d,))
 
             upd_one_root = Toplevel()
             upd_one_root.geometry("200x250")
 
             Label(upd_one_root, text="Sportista id: ").grid(column=1, row=0)
-            entry_what = Entry(upd_one_root)
-            entry_what.grid(column=1, row=1)
+            entry_id = Entry(upd_one_root)
+            entry_id.grid(column=1, row=1)
 
-            Label(upd_one_root, text="Ko jus gribat atjaunot: ").grid(column=1, row=0)
+            Label(upd_one_root, text="Ko jus gribat atjaunot: ").grid(column=1, row=2)
             entry_what = Entry(upd_one_root)
-            entry_what.grid(column=1, row=1)
+            entry_what.grid(column=1, row=3)
 
-            Label(upd_one_root, text="Uz ko jus gribat atjaunot: ").grid(column=1, row=2)
+            Label(upd_one_root, text="Uz ko jus gribat atjaunot: ").grid(column=1, row=4)
             entry_on = Entry(upd_one_root)
-            entry_on.grid(column=1, row=3)
+            entry_on.grid(column=1, row=5)
 
-            Button(upd_one_root, text="Atjaunot", padx=10, pady=10).grid(column=1, row=4)
+            Button(upd_one_root, text="Atjaunot", padx=10, pady=10).grid(column=1, row=6)
 
         def upd_all():
         
@@ -430,7 +434,11 @@ def kata_level():
 
 
 
-            Label(reg_log, text="Ievadiet datus", padx=10, pady=10).grid(column=0, row=0)
+            Label(reg_log, text="Ievadiet datus", padx=10, pady=10)#.grid(column=0, row=0)
+
+            Label(reg_log, text="Id:").grid(column=0, row=0)
+            entry_id = Entry(reg_log)
+            entry_id.grid(column=1, row=0, padx=5, pady=5)
 
 
             Label(reg_log, text="Vards:").grid(column=0, row=1)
