@@ -342,7 +342,7 @@ def kata_level():
         kata_combobox = ttk.Combobox(reg_log, width=30, state="readonly", values=names)
         kata_combobox.grid(column=1, row=8, padx=10)
 
-        Button(reg_log, text="Saglabat", padx=10, pady=10, command=parbaude).grid(column=1, row=9)
+        Button(reg_log, text="Saglabat", padx=10, pady=10, command=kata_reg).grid(column=1, row=9)
 
     #Atjaunošanas logs
 
